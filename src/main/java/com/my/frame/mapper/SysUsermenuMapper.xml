@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.my.frame.dao.SysUsermenuDao">
+
+  <select id="getUserMenuList" resultType="com.my.frame.model.SysMenu">
+    SELECT sys_menu.*
+    FROM sys_usermenu LEFT JOIN sys_menu ON sys_usermenu.MENU_CD = sys_menu.MENU_CD
+    <where>
+      <if test="userCd != null and userCd != ''">
+        AND sys_usermenu.USER_CD = #{userCd}
+      </if>
+      <if test="menuCd != null and menuCd != ''">
+        AND sys_usermenu.MENU_CD = #{menuCd}
+      </if>
+      <if test="menuType != null and menuType != ''">
+        AND sys_menu.MENU_TYPE = #{menuType}
+      </if>
+      <if test="supMenuCd != null and supMenuCd != ''">
+        AND sys_menu.SUP_MENU_CD = #{supMenuCd}
+      </if>
+      <if test="baseBtn != null and baseBtn != ''">
+        AND sys_menu.MENU_OTHER4 = #{baseBtn}
+      </if>
+      <if test="btnPosition != null and btnPosition != ''">
+        AND sys_menu.BTN_POSITION = #{btnPosition}
+      </if>
+    </where>
+  </select>
+</mapper>

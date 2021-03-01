@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:aop="http://www.springframework.org/schema/aop" 
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" 
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/aop
+            http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context-3.2.xsd
+            http://www.springframework.org/schema/mvc
+            http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+            http://www.springframework.org/schema/tx
+            http://www.springframework.org/schema/tx/spring-tx-3.0.xsd" >
+
+    <!-- TODO 为什么加上这个service就能扫描到，不加就扫描不到；applicationContext里的扫描不加也会有错，只不过错不同，这两个扫描有什么区别 -->
+    <!--扫描com.my.controller包下的所有class文件，配置注解的类全都装入容器中进行管理，以完成Bean创建和自动依赖注入的功能 -->
+    <!--<context:component-scan base-package="com" />-->
+    <context:component-scan base-package="com.my.**"/>
+
+    <!--事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <!--通知spring使用cglib而不是jdk的来生成代理方法 AOP可以拦截到Controller -->
+    <aop:aspectj-autoproxy proxy-target-class="true" />
+
+    <!--开启了对注解的解析-->
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+
+    <!-- 添加注解驱动 -->
+    <mvc:annotation-driven />
+
+    <!-- 静态资源处理 -->
+    <mvc:resources mapping="/static/**" location="/WEB-INF/static/"/>
+
+    <!-- 对"/"地址进行重定向 -->
+    <!--<mvc:view-controller path="/" view-name="redirect:/login"/>-->
+
+    <!-- mvc拦截 -->
+    <mvc:interceptors>
+        <!-- 设置访问信息拦截器 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/static/**" />
+            <bean class="com.my.filter.OrgSetVisitInfoInterceptor"></bean>
+        </mvc:interceptor>
+
+        <!-- 登录拦截 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/static/**" />
+            <bean class="com.my.filter.LoginInterceptor"></bean>
+        </mvc:interceptor>
+
+        <!-- 用户状态拦截 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <!-- 不拦截的链接 -->
+            <mvc:exclude-mapping path="/"/>
+            <mvc:exclude-mapping path="/login"/>
+            <mvc:exclude-mapping path="/login/**"/>
+            <mvc:exclude-mapping path="/error/**"/>
+            <mvc:exclude-mapping path="/static/**" />
+            <bean class="com.my.filter.UserStaticInterceptor"></bean>
+        </mvc:interceptor>
+
+        <!-- 站点权限拦截 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <!-- 不拦截的链接 -->
+            <mvc:exclude-mapping path="/"/>
+            <mvc:exclude-mapping path="/error/**"/>
+            <mvc:exclude-mapping path="/static/**" />
+            <bean class="com.my.filter.OrgPermissionInterceptor"></bean>
+        </mvc:interceptor>
+
+        <!-- 权限拦截 -->
+        <mvc:interceptor>
+            <!-- 拦截的链接 -->
+            <mvc:mapping path="/**"/>
+            <!-- 不拦截的链接 -->
+            <mvc:exclude-mapping path="/"/>
+            <mvc:exclude-mapping path="/login"/>
+            <mvc:exclude-mapping path="/login/**"/>
+            <mvc:exclude-mapping path="/error/**"/>
+            <mvc:exclude-mapping path="/static/**" />
+            <!-- 拦截器指向 -->
+            <bean class="com.my.filter.PermissionInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <!-- FreeMarker视图解析器  -->
+    <bean id="freemarkerResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="order" value="1" />
+        <property name="suffix" value=".ftl" />
+        <property name="contentType" value="text/html;charset=utf-8" />
+        <property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" />
+        <property name="exposeRequestAttributes" value="true" />
+        <property name="exposeSessionAttributes" value="true" />
+        <property name="exposeSpringMacroHelpers" value="true" />
+        <property name="requestContextAttribute" value="request" />
+    </bean>
+
+    <!-- freemarker的配置 -->
+    <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="/WEB-INF/ftl/" />
+        <property name="freemarkerSettings"><!-- 设置FreeMarker环境属性 -->
+            <props>
+                <prop key="template_update_delay">5</prop><!--刷新模板的周期，单位为秒 -->
+                <prop key="default_encoding">UTF-8</prop><!--模板的编码格式 -->
+                <prop key="locale">UTF-8</prop><!-- 本地化设置 -->
+                <prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+                <prop key="time_format">HH:mm:ss</prop>
+                <prop key="number_format">0.####</prop>
+                <prop key="boolean_format">true,false</prop>
+                <prop key="whitespace_stripping">true</prop>
+                <prop key="tag_syntax">auto_detect</prop>
+                <prop key="url_escaping_charset">UTF-8</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- 需要文件上传功能时，启用以下配置 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxInMemorySize">
+            <value>1638400</value>
+        </property>
+    </bean>
+
+    <!-- mapper解读 -->
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>text/plain;charset=UTF-8</value>
+                        </list>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+    <!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>text/plain;charset=UTF-8</value>
+                        </list>
+                    </property>
+                </bean>
+                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>application/json;charset=UTF-8</value>
+                        </list>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+
+</beans>

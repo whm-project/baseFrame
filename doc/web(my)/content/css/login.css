@@ -1,0 +1,136 @@
+@import url("base.css");
+body, .ltdiv, .rtdiv, .condiv {
+	position:absolute;
+}
+body {
+	background:url(../img/login/bg.jpg) center top no-repeat;
+	top:0px;
+	left:0px;
+	right:0px;
+	bottom:0px;
+}
+.ltdiv {
+	top:0px;
+	left:0px;
+	background:url(../img/login/leftTop.png) top left no-repeat;
+	width:250px;
+	height:273px;
+}
+.rtdiv {
+	top:0px;
+	right:0px;
+	background:url(../img/login/rightTop.png) top left no-repeat;
+	width:289px;
+	height:105px;
+}
+.condiv {
+	width:920px;
+	height:446px;
+	left:50%;
+	top:50%;
+	margin:-223px 0 0 -460px;
+}
+.logodiv{
+	/*background:url(../img/login/logo.png) center no-repeat;*/
+	height:48px;
+	clear:both;
+	margin:0 0 43px 0;
+	text-align:center;
+	line-height:48px;
+	font-size:48px;
+	color:#fff;
+	font-weight:bold;
+}
+.content {
+	height:361px;
+	background:url(../img/login/logoBg.png) center no-repeat;
+	clear:both;
+	padding:0 55px;
+}
+.zhinan {
+	height:110px;
+	clear:both;
+}
+.zhinan a {
+	display:block;
+	float:right;
+	height:18px;
+	line-height:18px;
+	text-align:center;
+	border-right:1px #949cb9 solid;
+	font-size:12px;
+	width:84px;
+	color:#fff;
+	margin:46px 0 0 0;
+	cursor:pointer;
+}
+.zhinan a.end {
+	border:0;
+}
+.zhinan a:hover {
+	color:#FF0;
+}
+.logIn {
+	width:318px;
+	height:48px;
+	margin:34px 0 0 0;
+	padding:0 0 0 64px;
+	border:0px;
+	color:#bab8c9;
+	font-size:20px;
+}
+.user {
+	background:url(../img/login/user.png) left no-repeat #FFF;
+	background-position:6% 50%;
+	float:left;
+}
+.pass {
+	background:url(../img/login/pass.png) left no-repeat #FFF;
+	background-position:6% 50%;
+	float:right;
+}
+.btn {
+	display:block;
+	font-size:20px;
+	height:48px;
+	width:382px;
+	float:right;
+	text-align:center;
+	line-height:48px;
+	color:#FFF;
+	margin:34px 0 0 0;
+	cursor:pointer;
+	background: -webkit-linear-gradient(bottom,#15d3ff, #194dd9);
+	background: -o-linear-gradient(bottom,#15d3ff, #194dd9);
+	background: -moz-linear-gradient(bottom,#15d3ff, #194dd9);
+	background: linear-gradient(to top,#15d3ff, #194dd9); 
+}
+.btn:hover {
+	color:#FF0;
+	background: -webkit-linear-gradient(bottom,#194dd9, #15d3ff);
+	background: -o-linear-gradient(bottom,#194dd9, #15d3ff);
+	background: -moz-linear-gradient(bottom,#194dd9, #15d3ff);
+	background: linear-gradient(to top,#194dd9, #15d3ff); 
+}
+.dll {
+	float:left;
+}
+.yzdiv {
+	height:48px;
+	width:382px;
+	float:left;
+	background:#fff;
+	margin:34px 0 0 0;
+}
+.yzm {
+	margin:0px;
+	float:left;
+	width:200px;
+	background:url(../img/login/yzm.png) left no-repeat #FFF;
+	background-position:6% 50%;
+}
+.yzmImg {
+	margin:4px 5px;
+	float:right;
+	cursor:pointer;
+}

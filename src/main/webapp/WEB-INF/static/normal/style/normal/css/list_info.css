@@ -1,0 +1,35 @@
+* { margin:0; padding:0;}
+
+input{
+	border:solid 1px #BDD8EE;
+	border-radius:2px;
+}
+
+ .but_find{
+	 border-radius: 5px;
+	 border:none;
+	 padding: 6px 10px 6px 10px;
+	 margin-right: 10px;
+	 background-color:#42aeec;
+	 color: #ffffff;
+ }
+.but_find:active{
+	background-color: #3a87ad;
+}
+.p_line{
+	padding-top: 20px;
+	padding-bottom: 20px;
+	margin-bottom: 0px;
+	margin-left: 15px;
+}
+.table_style{
+	width: 100% !important;
+	margin-left: 0% !important;
+	height: auto;
+	border-collapse: collapse;
+	font-size: 13px;
+	color: #333333;
+
+}
+/*#table th{background-color: #3b97d7;color: #fff;border:none;}*/
+#table tbody button{line-height: 22px;padding: 0 6px;font-size: 10px;background-color: #3b97d7;border: none;border-radius: 2px;color: #fff}

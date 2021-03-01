@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.my.frame.dao.SysUserDao">
+
+    <select id="findPageInfo" resultType="com.my.frame.model.viewModel.SysUserViewModel">
+        select sys_user.*, sys_org.ORG_NM
+        from sys_user left join sys_org on sys_user.ORG_CD = sys_org.ORG_CD
+        <where>
+            <if test="orgCd!=null and orgCd!=''">
+                AND sys_org.ORG_Cd = '${orgCd}'
+            </if>
+            <if test="userNm!=null and userNm!=''">
+                AND sys_user.USER_NM like '%${userNm}%'
+            </if>
+            <if test="userCd!=null and userCd!=''">
+                AND sys_user.USER_CD like '%${userCd}%'
+            </if>
+            <if test="orgIndex!=null and orgIndex!=''">
+                AND sys_org.ORG_Index like '%${orgIndex}%'
+            </if>
+        </where>
+        <if test="order!=null and order!=''">
+            ORDER BY ${order}
+        </if>
+    </select>
+
+</mapper>

@@ -1,0 +1,56 @@
+#main {
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    padding:0px;
+    border: none;
+}
+.header {
+    /*background-color:lightblue;*/
+    width:100%;
+    height:50px;
+    background-color: #5093bd;
+}
+.header_title{
+    font-size: 24px;
+    display: inline-block;
+    padding: 5px 20px;
+    float: left;
+}
+.header_button{
+    font-size: 20px;
+    display: inline-block;
+    padding: 9px 20px;
+    float: right;
+    color: #541a8b;
+}
+.header_info{
+    font-size: 13px;
+    display: inline-block;
+    padding-right:20px;
+    float: right;
+    text-align: right;
+}
+.content {
+    width:100%;
+    /*height:calc( 100% - 50px );*/
+    height: 100%;
+    margin:0;
+    padding:0;
+    border: none;
+    display: -webkit-flex; /*在webkit内核的浏览器上使用要加前缀*/
+    -webkit-flex-flow: row wrap; /* Safari 6.1+ */
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.menuDiv {
+    width:50px;
+    height:100%;
+}
+.modularDiv {
+    /*background-color:pink;*/
+    width:calc( 100% - 50px );
+    height:100%
+}

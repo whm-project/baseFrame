@@ -1,0 +1,11 @@
+prefix_orgCd            request.attribute
+prefix_orgNm            request.attribute
+prefix_orgStyleLib      request.attribute
+prefix_orgLayoutLib      request.attribute
+currentMenuCd            request.params  --页面参数，根据这个参数获得拥有权限的按钮组
+code                session         --验证码
+userCd              session
+userNm              session
+userOrgCd           session
+userOrgIndex        session
+login_prefix_orgCd  session

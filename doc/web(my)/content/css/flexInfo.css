@@ -1,0 +1,262 @@
+@charset "utf-8";
+/* CSS Document */
+#main {
+	background-color:#ffffff; 
+	position:absolute;
+	top:0;
+	bottom:0;
+	left:0;
+	right:0;
+    border: none;
+}
+.content {
+	width:100%;
+	height:100%;
+	margin:0;
+	padding:0;
+    border: none;
+    display: -webkit-flex; /*在webkit内核的浏览器上使用要加前缀*/
+    -webkit-flex-flow: row wrap; /* Safari 6.1+ */
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.menuDiv {
+	width:220px; 
+	height:100%;
+}
+.menuDiv_mini{
+	width:0px; 
+	height:100%;
+}
+.modularDiv {
+	width:calc( 100% - 220px ); 
+	height:100%;
+	position:relative;
+}
+.modularDiv_mini{
+	width:calc( 100% - 0px ); 
+	height:100%;
+	position:relative;
+}
+.menubtn_zhankai {
+	position: absolute;
+    color: #ffffff;
+    top: 16px;
+    left: 16px;
+    width: 30px;
+	height:20px;
+	background:url(../img/home/zhankai.png) no-repeat;
+}
+.menubtn_shousuo {
+	position: absolute;
+    color: #ffffff;
+    top: 16px;
+    left: 16px;
+    width: 30px;
+	height:20px;
+	background:url(../img/home/shousuo.png) no-repeat;
+}
+
+.topr, .midt, .midf {
+	position:absolute;
+}
+.logol {
+	width:50%;
+	height:78px;
+	margin:0 auto;
+	background:url(../img/home/logoBgl.png) left center no-repeat;
+	padding:0 0 0 110px;
+	float:left;
+	box-sizing:border-box;
+}
+.logor {
+	height:78px;
+	margin:0 auto;
+	background:url(../img/home/logoBgr.png) right center no-repeat;
+	padding:0 110px 0 0;
+}
+.logom {	
+	height:78px;
+	background:url(../img/home/logoBgm.png) repeat-x;
+	line-height:58px;
+	color:#756363;
+	font-size:36px;
+	text-align:center;
+}
+.topl {
+	height:57px;
+	float:left;
+	width:25%;
+	text-align:center;
+	padding:0 0 0 3%;
+	box-sizing:border-box;
+}
+.topl font, .topl span {
+	font-size:14px;
+	color:#00bcff;
+	line-height:57px;
+}
+.topl font {
+	padding:0 15px 0 0;
+}
+.topr {
+	width:25%;
+	height:57px;
+	right:13px;
+	top:17px;
+}
+.topr a {
+	width:102px;
+	height:26px;
+	line-height:24px;
+	background:url(../img/home/topAbtn.png) center no-repeat;
+	text-align:center;
+	display:block;
+	float:left;
+	font-size:14px;
+	color:#00bcff;
+	margin:0 0 0 -6px;
+}
+.topr a:hover {
+	background:url(../img/home/topAbtn1.png) center no-repeat;
+	color:#fff;
+}
+.midt {
+	height:53px;
+	top:57px;
+	left:15px;
+	right:15px;
+}
+.midtl {
+	width:27.5%;
+	box-sizing:border-box;
+	height:53px;
+	background:url(../img/home/midll.png) left center no-repeat;
+	padding:0 0 0 62px;
+	float:left;
+}
+.midtlr, .midtrr {
+	height:53px;
+	box-sizing:border-box;
+	padding:0 31px 0 0;
+	background:url(../img/home/midlr.png) center right no-repeat;
+}
+.midtlm, .midtrm {
+	height:53px;
+	background:url(../img/home/midlm.png) repeat-x;
+}
+.midtm {
+	background:url(../img/home/midm.png) repeat-x;
+	width:45%;
+	height:53px;
+	float:left;
+}
+.midtr {
+	float:right;
+	width:27.5%;
+	box-sizing:border-box;
+	height:53px;
+	background:url(../img/home/midrl.png) left center no-repeat;
+	padding:0 0 0 20px;
+}
+.midtrr {
+	background:url(../img/home/midrr.png) center right no-repeat;
+	padding:0 18px 0 0;
+}
+.midtrm {
+	background:url(../img/home/midrm.png) repeat-x;
+}
+.midf {
+	top:110px;
+	right:15px;
+	left:15px;
+	bottom:15px;
+	border:#00b5f3 solid 1px;
+	border-top:0px;
+	box-sizing:border-box;
+	padding:0 20px 20px;
+}
+.midf iframe{
+	width: 100%; 
+	height: 100%; 
+	border: none; 
+	margin: 0; 
+	padding: 0;
+}
+.midfl, .midfr {
+	width:20%;
+	height:100%;
+	float:left;
+}
+.midfr {
+	float:right;
+}
+.midflt, .midflf {
+	width:100%;
+	height:50%;
+	box-sizing:border-box;
+	padding:0 0 10px 0;
+}
+.midflf {
+	padding:10px 0 0 0;
+}
+.midfm {
+	float:left;
+	width:58%;
+	margin:0 1%;
+	height:100%;
+	background:#990;
+}
+.midcon {
+	width:100%;
+	height:100%;
+	background:url(../img/home/conBg.png);
+	background-size:100% 100%;
+}
+.midcon h1 {
+	height:10%;
+	clear:both;
+	box-sizing:border-box;
+	color:#41d6fd;
+	font-size:16px;
+	background:url(../img/home/titleBg.png) no-repeat;
+	background-position:5% 50%;
+	background-size:7% 40%;
+	line-height:36px;
+	padding:0 0 0 14%;
+	font-weight:normal;
+}
+.midconn {
+	height:90%;
+	width:100%;
+	padding:5% 7%;
+	box-sizing:border-box;
+}
+.midconn a {
+	height:20%;
+	width:48%;
+	box-sizing:border-box;
+	display:block;
+	float:left;
+	margin:7% 0 3%;
+	color:#FFF;
+}
+.midconn a h2 {
+	font-size:15px;
+	padding:0 0 10px 8px;
+	float:left;
+}
+.midPic {
+	float:left;
+	width:auto;
+	height:100%;
+}
+.midconn a span {
+	font-size:12px;
+	float:left;
+}
+.midconn a span font {
+	color:#f8b62d;
+	font-size:15px;
+	padding:0 5px 0 8px;
+}

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop" 
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd"
+       default-init-method="init">
+
+    <!-- 自动扫描 这边要注意的就是要替换成自己的工程目录地址 -->
+    <context:component-scan base-package="com.my.frame.*">
+        <!-- 去除controller的扫描，controller在spring-mvc中扫描 -->
+        <!--<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"></context:exclude-filter>-->
+    </context:component-scan>
+
+    <!-- 引入jdbc配置文件 -->
+    <context:property-placeholder location="classpath:jdbc.properties" />
+
+	<!-- 启动对注解的支持
+	<aop:aspectj-autoproxy/> -->
+
+    <!-- 配置数据源 -->
+    <bean name="dataSource_base" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="driverClassName" value="${jdbc_driverClassName}" />
+        <property name="url" value="${jdbc_url}" />
+        <property name="username" value="${jdbc_username}" />
+        <property name="password" value="${jdbc_password}" />
+
+        <!-- 初始化连接大小 -->
+        <property name="initialSize" value="${initialSize}" />
+        <!-- 连接池最大使用连接数量 -->
+        <property name="maxActive" value="${maxActive}" />
+        <!-- 连接池最小空闲 -->
+        <property name="minIdle" value="${maxIdle}" />
+        <!-- 获取连接最大等待时间 -->
+        <property name="maxWait" value="${maxWait}" />
+
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="validationQuery" value="${validationQuery}" />
+        <property name="testOnBorrow" value="false" />
+        <property name="testOnReturn" value="false" />
+        <property name="testWhileIdle" value="true" />
+
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="${timeBetweenEvictionRunsMillis}" />
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="${minEvictableIdleTimeMillis}" />
+
+        <!-- 打开removeAbandoned功能 -->
+        <property name="removeAbandoned" value="true" />
+        <!-- 900秒，也就是15分钟 -->
+        <property name="removeAbandonedTimeout" value="${removeAbandonedTimeout}" />
+        <!-- 关闭abanded连接时输出错误日志 -->
+        <property name="logAbandoned" value="true" />
+
+        <!-- 监控数据库 -->
+        <property name="filters" value="${filters}" />
+    </bean>
+
+    <!-- 配置数据源 -->
+    <bean name="dataSource_business" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="driverClassName" value="${jdbc_driverClassName_business}" />
+        <property name="url" value="${jdbc_url_business}" />
+        <property name="username" value="${jdbc_username_business}" />
+        <property name="password" value="${jdbc_password_business}" />
+
+        <!-- 初始化连接大小 -->
+        <property name="initialSize" value="${initialSize}" />
+        <!-- 连接池最大使用连接数量 -->
+        <property name="maxActive" value="${maxActive}" />
+        <!-- 连接池最小空闲 -->
+        <property name="minIdle" value="${maxIdle}" />
+        <!-- 获取连接最大等待时间 -->
+        <property name="maxWait" value="${maxWait}" />
+
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="validationQuery" value="${validationQuery}" />
+        <property name="testOnBorrow" value="false" />
+        <property name="testOnReturn" value="false" />
+        <property name="testWhileIdle" value="true" />
+
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="${timeBetweenEvictionRunsMillis}" />
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="${minEvictableIdleTimeMillis}" />
+
+        <!-- 打开removeAbandoned功能 -->
+        <property name="removeAbandoned" value="true" />
+        <!-- 900秒，也就是15分钟 -->
+        <property name="removeAbandonedTimeout" value="${removeAbandonedTimeout}" />
+        <!-- 关闭abanded连接时输出错误日志 -->
+        <property name="logAbandoned" value="true" />
+
+        <!-- 监控数据库 -->
+        <property name="filters" value="${filters}" />
+    </bean>
+
+    <bean id="dataSource" class="com.my.utils.DynamicDataSource">
+        <property name="targetDataSources">
+            <map key-type="java.lang.String">
+                <entry key="dataSource_base" value-ref="dataSource_base"/>
+                <entry key="dataSource_downWord" value-ref="dataSource_business"/>
+            </map>
+        </property>
+        <!--默认数据源-->
+        <property name="defaultTargetDataSource" ref="dataSource_base"/>
+    </bean>
+
+    <!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 以下扫描文件路径是generator自动生成的mapper.xml路径-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <!--mybatis配置文件-->
+        <!-- Mapper接口所在包名，Spring会自动查找其下的Mapper -->
+        <property name="mapperLocations" value="classpath:com/my/**/mapper/*.xml" />
+        <!-- 自动扫描mapping.xml文件 这边的要配置成自己的目录-->
+        <property name="configLocation" value="classpath:mybatis-config.xml" />
+    </bean>
+
+    <!-- 配置事务管理器，全注解声明式事务  -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <!-- DAO接口所在包名，Spring会自动查找其下的类 -->
+    <bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com/my/**/dao" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+        <!-- 默认情况下会自动注入id=sqlSessionFactory的bean，也可以按上述方式指定sqlSessionFactory -->
+    </bean>
+
+</beans>
