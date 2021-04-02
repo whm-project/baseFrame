@@ -122,8 +122,10 @@
       <version>4.0.2</version>
     </dependency>
     <!-- mybatis-generator -->
+
+    <!-- generator-core -->
     <dependency>
-      <groupId>com.hy.generator</groupId>
+      <groupId>whm</groupId>
       <artifactId>java-generator-core</artifactId>
       <version>1.0</version>
     </dependency>
@@ -361,7 +363,7 @@
 
       <!-- mybatis-generator插件 -->
       <plugin>
-        <groupId>com.hy.generator</groupId>
+        <groupId>whm</groupId>
         <artifactId>java-generator-maven-plugin</artifactId>
         <version>1.0</version>
         <configuration>
